@@ -1,0 +1,21 @@
+{
+  "name": "php_version_compare",
+  "version": "1.0.0",
+  "description": "Compares two \"PHP-standardized\" version number strings",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint ./ --ext js --fix",
+    "test": "mocha test",
+    "testcoverage": "nyc --reporter=html --reporter=text mocha test"
+  },
+  "author": "Guillaume Baudhuin",
+  "license": "Apache 2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-plugin-extra-rules": "^0.8.1",
+    "eslint-plugin-html": "^3.2.2",
+    "mocha": "^4.0.1",
+    "nyc": "^11.3.0"
+  }
+}
