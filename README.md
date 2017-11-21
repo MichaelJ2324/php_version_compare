@@ -1,12 +1,14 @@
 # php_version_compare
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-green.svg)](https://img.shields.io/badge/coverage-100%25-green.svg)
+[![Build](https://img.shields.io/badge/build-100%25-brightgreen.svg)](https://img.shields.io/badge/build-passing-green.svg)
+[![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](https://img.shields.io/badge/build-100%25-green.svg)
 
 Compares two "PHP-standardized" version number strings.
 
 [PHP.NET documentation](http://php.net/manual/en/function.version-compare.php) : "The function first replaces _, - and + with a dot . in the version strings and also inserts dots . before and after any non number so that for example '4.3.2RC1' becomes '4.3.2.RC.1'. Then it compares the parts starting from left to right. If a part contains special version strings these are handled in the following order: any string not found in this list < dev < alpha = a < beta = b < RC = rc < # < pl = p. This way not only versions with different levels like '4.1' and '4.1.2' can be compared but also any PHP specific version containing development state."
 
-Written in pure JS. Passes the 700+ test cases of the standard PHP function source code.
+Written in pure JS. Passes all 700+ test cases of the standard PHP function source code.
 
 Installing
 -----------------------
