@@ -39,8 +39,3 @@ const versionCompare = require('php_version_compare')
 console.log(versionCompare('1.11', '1.12')) // -1
 console.log(versionCompare('1.11rc1', '1.11', 'lt')) // true
 ```
-
-Author
-------
-
-[Guillaume Baudhuin](https://github.com/gbaudhuin)
