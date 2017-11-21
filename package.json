@@ -1,6 +1,6 @@
 {
   "name": "php_version_compare",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Compares two \"PHP-standardized\" version number strings",
   "main": "index.js",
   "repository": "gbaudhuin/php_version_compare",
@@ -10,7 +10,7 @@
     "testcoverage": "nyc --reporter=html --reporter=text mocha test"
   },
   "author": "Guillaume Baudhuin",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.8.0",
