@@ -1,9 +1,9 @@
 {
   "name": "php_version_compare2",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Compares two \"PHP-standardized\" version number strings. Fork of gbaudhuin/php_version_compare.",
   "main": "index.js",
-  "repository": "michaelj324/php_version_compare",
+  "repository": "michaelj2324/php_version_compare",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./ --ext js --fix",
     "test": "mocha test",
