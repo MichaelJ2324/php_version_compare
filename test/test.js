@@ -1,7 +1,6 @@
 const assert = require('assert')
 const fs = require('fs')
-const utils = require('../utils')
-const versionCompare = require('../index')
+const versionCompare = require('../index');
 const describe = require('mocha').describe // avoid eslint warnings
 const it = require('mocha').it // avoid eslint warnings
 
@@ -10,31 +9,31 @@ const contentOperators = fs.readFileSync('./test/operators.txt', 'UTF-8').split(
 
 describe('phpCanonicalizeVersion', function () {
   it('return empty string on 0 length version', function () {
-    assert.equal(utils.phpCanonicalizeVersion(''), '')
+    assert.equal(versionCompare()._utils.phpCanonicalizeVersion(''), '')
   })
 
   it('transforms 4.3.5RC1 to 4.3.5.RC.1', function () {
-    assert.equal(utils.phpCanonicalizeVersion('4.3.5RC1'), '4.3.5.RC.1')
+    assert.equal(versionCompare()._utils.phpCanonicalizeVersion('4.3.5RC1'), '4.3.5.RC.1')
   })
 
   it('transforms 4.3.5RC1+ to 4.3.5.RC.1.', function () {
-    assert.equal(utils.phpCanonicalizeVersion('4.3.5RC1+'), '4.3.5.RC.1.')
+    assert.equal(versionCompare()._utils.phpCanonicalizeVersion('4.3.5RC1+'), '4.3.5.RC.1.')
   })
 
   it('transforms 4.3_5RC1 to 4.3.5.RC.1', function () {
-    assert.equal(utils.phpCanonicalizeVersion('4.3_5RC1'), '4.3.5.RC.1')
+    assert.equal(versionCompare()._utils.phpCanonicalizeVersion('4.3_5RC1'), '4.3.5.RC.1')
   })
 
   it('transforms 1.0-dev to 1.0.dev', function () {
-    assert.equal(utils.phpCanonicalizeVersion('1.0-dev'), '1.0.dev')
+    assert.equal(versionCompare()._utils.phpCanonicalizeVersion('1.0-dev'), '1.0.dev')
   })
 })
 
 describe('compareSpecialVersionForms', function () {
   it('case 1', function () {
-    assert.equal(utils.compareSpecialVersionForms('beta', 'RC'), -1)
-    assert.equal(utils.compareSpecialVersionForms('rc', 'RC'), 0)
-    assert.equal(utils.compareSpecialVersionForms('RC', 'alpha'), 1)
+    assert.equal(versionCompare()._utils.compareSpecialVersionForms('beta', 'RC'), -1)
+    assert.equal(versionCompare()._utils.compareSpecialVersionForms('rc', 'RC'), 0)
+    assert.equal(versionCompare()._utils.compareSpecialVersionForms('RC', 'alpha'), 1)
   })
 })
 
@@ -58,7 +57,7 @@ describe('version_compare', function () {
     assert.equal(versionCompare('1.pl1', '1-.dev'), 1)
     assert.equal(versionCompare('1.pl1', '1.-dev'), 1)
     assert.equal(versionCompare(null, null), 0)
-    assert.equal(versionCompare(), 0)
+    assert.equal(versionCompare().compare(), 0)
     assert.equal(versionCompare('1.0'), 1)
     assert.equal(versionCompare(null, '1.0'), -1)
     assert.equal(versionCompare('1d.0', '1.0'), -1)

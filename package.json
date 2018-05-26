@@ -1,15 +1,15 @@
 {
   "name": "php_version_compare",
-  "version": "1.0.3",
-  "description": "Compares two \"PHP-standardized\" version number strings",
+  "version": "1.0.4",
+  "description": "Compares two \"PHP-standardized\" version number strings. Fork of gbaudhuin/php_version_compare.",
   "main": "index.js",
-  "repository": "gbaudhuin/php_version_compare",
+  "repository": "michaelj324/php_version_compare",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./ --ext js --fix",
     "test": "mocha test",
     "testcoverage": "nyc --reporter=html --reporter=text mocha test"
   },
-  "author": "Guillaume Baudhuin",
+  "author": "Michael Russell",
   "license": "Apache-2.0",
   "dependencies": {},
   "devDependencies": {
