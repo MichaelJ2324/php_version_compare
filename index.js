@@ -21,70 +21,70 @@
     {name: '#', order: 4},
     {name: 'pl', order: 5},
     {name: 'p', order: 5}
-  ]
+  ];
 
   const utils = {
 
     isdigit: function (char) {
-      return char >= '0' && char <= '9'
+      return char >= '0' && char <= '9';
     },
     isalnum: function (char) {
-      return (char >= '0' && char <= '9') || (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')
+      return (char >= '0' && char <= '9') || (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z');
     },
     isdig: function (x) {
-      return this.isdigit(x) && (x !== '.')
+      return this.isdigit(x) && (x !== '.');
     },
     isndig: function (x) {
-      return !this.isdigit(x) && (x !== '.')
+      return !this.isdigit(x) && (x !== '.');
     },
     isspecialver: function (x) {
-      return (x === '-') || (x === '_') || (x === '+')
+      return (x === '-') || (x === '_') || (x === '+');
     },
     strncmp: function (str1, str2, n) {
-      str1 = str1.substring(0, n)
-      str2 = str2.substring(0, n)
-      const nested = (str1 > str2) ? 1 : -1
-      return (str1 === str2) ? 0 : nested
+      str1 = str1.substring(0, n);
+      str2 = str2.substring(0, n);
+      const nested = (str1 > str2) ? 1 : -1;
+      return (str1 === str2) ? 0 : nested;
     },
     estrdup: function (str) {
-      return (' ' + str).slice(1)
+      return (' ' + str).slice(1);
     },
     phpCanonicalizeVersion: function (version) {
-      let len = version.length
+      let len = version.length;
       if (len === 0) {
-        return ''
+        return '';
       }
 
-      let i = 0
-      let lp = version[i++]
-      let ret = lp
-      let p = version[i]
+      let i = 0;
+      let lp = version[i++];
+      let ret = lp;
+      let p = version[i];
       while (p) {
-        let lq = ret[i - 1]
+        let lq = ret[i - 1];
         if (this.isspecialver(p)) {
           if (lq !== '.') {
-            ret += '.'
+            ret += '.';
           }
         } else if ((this.isndig(lp) && this.isdig(p)) || (this.isdig(lp) && this.isndig(p))) {
           if (lq !== '.') {
-            ret += '.'
+            ret += '.';
           }
-          ret += p
+          ret += p;
         } else if (!this.isalnum(p)) {
           if (lq !== '.') {
-            ret += '.'
+            ret += '.';
           }
         } else {
-          ret += p
+          ret += p;
         }
-        lp = p
-        p = version[++i]
+        lp = p;
+        p = version[++i];
       }
-      return ret
+      return ret;
     },
     compareSpecialVersionForms: function (form1, form2) {
-      let found1 = -1
-      let found2 = -1
+      let found1 = -1;
+      let found2 = -1;
 
       for (let pp of specialForms) {
         if (this.strncmp(form1, pp.name, pp.name.length) === 0) {
@@ -100,106 +100,106 @@
         }
       }
 
-      const x = found1 - found2
-      const nested = (x < 0) ? -1 : 0
-      return (x > 0) ? 1 : nested
+      const x = found1 - found2;
+      const nested = (x < 0) ? -1 : 0;
+      return (x > 0) ? 1 : nested;
     }
   }
 
   let versionCompareInternal = function (origVer1, origVer2) {
-    let ver1 = ''
-    let ver2 = ''
-    let compare = 0
+    let ver1 = '';
+    let ver2 = '';
+    let compare = 0;
 
     if (!origVer1 || !origVer2) {
       if (!origVer1 && !origVer2) {
-        return 0
+        return 0;
       } else {
-        return origVer1 ? 1 : -1
+        return origVer1 ? 1 : -1;
       }
     }
 
-    origVer1 = origVer1.trim()
-    origVer2 = origVer2.trim()
+    origVer1 = origVer1.trim();
+    origVer2 = origVer2.trim();
 
     if (origVer1[0] === '#') {
-      ver1 = utils.estrdup(origVer1)
+      ver1 = utils.estrdup(origVer1);
     } else {
-      ver1 = utils.phpCanonicalizeVersion(origVer1)
+      ver1 = utils.phpCanonicalizeVersion(origVer1);
     }
     if (origVer2[0] === '#') {
-      ver2 = utils.estrdup(origVer2)
+      ver2 = utils.estrdup(origVer2);
     } else {
-      ver2 = utils.phpCanonicalizeVersion(origVer2)
+      ver2 = utils.phpCanonicalizeVersion(origVer2);
     }
-    let v1 = ver1.split('.')
-    let v2 = ver2.split('.')
+    let v1 = ver1.split('.');
+    let v2 = ver2.split('.');
     let i = 0
     while (i < v1.length && i < v2.length && compare === 0) {
-      let p1 = v1[i]
-      let p2 = v2[i]
+      let p1 = v1[i];
+      let p2 = v2[i];
       if (utils.isdigit(p1[0]) && utils.isdigit(p2[0])) {
         // compare element numerically
-        const l1 = parseInt(p1)
-        const l2 = parseInt(p2)
+        const l1 = parseInt(p1);
+        const l2 = parseInt(p2);
         const x = l1 - l2
         const nested = (x < 0) ? -1 : 0
         compare = (x > 0) ? 1 : nested
       } else if (!utils.isdigit(p1[0]) && !utils.isdigit(p2[0])) {
         // compare element names
-        compare = utils.compareSpecialVersionForms(p1, p2)
+        compare = utils.compareSpecialVersionForms(p1, p2);
       } else {
         // mix of names and numbers
         if (utils.isdigit(p1[0])) {
-          compare = utils.compareSpecialVersionForms('#N#', p2)
+          compare = utils.compareSpecialVersionForms('#N#', p2);
         } else {
-          compare = utils.compareSpecialVersionForms(p1, '#N#')
+          compare = utils.compareSpecialVersionForms(p1, '#N#');
         }
       }
       i++
     }
     if (compare === 0) {
       if (i < v1.length) {
-        let p1 = v1[i]
+        let p1 = v1[i];
         if (utils.isdigit(p1[0])) {
-          compare = 1
+          compare = 1;
         } else {
-          compare = versionCompare(p1, '#N#')
+          compare = versionCompare(p1, '#N#');
         }
       } else if (i < v2.length) {
-        let p2 = v2[i]
+        let p2 = v2[i];
         if (utils.isdigit(p2[0])) {
-          compare = -1
+          compare = -1;
         } else {
-          compare = versionCompare('#N#', p2)
+          compare = versionCompare('#N#', p2);
         }
       }
     }
-    return compare
+    return compare;
   }
 
   let versionCompare = function (origVer1, origVer2, operator) {
     const compare = versionCompareInternal(origVer1, origVer2)
     if (!operator) {
-      return compare
+      return compare;
     }
     if (operator === '<' || operator === 'lt') {
-      return (compare === -1)
+      return (compare === -1);
     }
     if (operator === '<=' || operator === 'le') {
-      return (compare !== 1)
+      return (compare !== 1);
     }
     if (operator === '>' || operator === 'gt') {
-      return (compare === 1)
+      return (compare === 1);
     }
     if (operator === '>=' || operator === 'ge') {
-      return (compare !== -1)
+      return (compare !== -1);
     }
     if (operator === '===' || operator === '==' || operator === '=' || operator === 'eq') {
-      return (compare === 0)
+      return (compare === 0);
     }
     if (operator === '!==' || operator === '!=' || operator === '<>' || operator === 'ne') {
-      return (compare !== 0)
+      return (compare !== 0);
     }
 
     return null

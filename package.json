@@ -1,6 +1,6 @@
 {
   "name": "php_version_compare2",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Compares two \"PHP-standardized\" version number strings. Fork of gbaudhuin/php_version_compare.",
   "main": "index.js",
   "repository": "michaelj324/php_version_compare",
