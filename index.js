@@ -50,17 +50,17 @@
       return (' ' + str).slice(1);
     },
     phpCanonicalizeVersion: function (version) {
-      let len = version.length;
+      var len = version.length;
       if (len === 0) {
         return '';
       }
 
-      let i = 0;
-      let lp = version[i++];
-      let ret = lp;
-      let p = version[i];
+      var i = 0;
+      var lp = version[i++];
+      var ret = lp;
+      var p = version[i];
       while (p) {
-        let lq = ret[i - 1];
+        var lq = ret[i - 1];
         if (this.isspecialver(p)) {
           if (lq !== '.') {
             ret += '.';
@@ -83,22 +83,17 @@
       return ret;
     },
     compareSpecialVersionForms: function (form1, form2) {
-      let found1 = -1;
-      let found2 = -1;
+      var self = this;
+      var found1 = specialForms.find(function (pp) {
+        return self.strncmp(form1, pp.name, pp.name.length) === 0;
+      });
 
-      for (let pp of specialForms) {
-        if (this.strncmp(form1, pp.name, pp.name.length) === 0) {
-          found1 = pp.order;
-          break;
-        }
-      }
+      found1 = typeof found1 == 'undefined' ? -1 : found1.order;
 
-      for (let pp of specialForms) {
-        if (this.strncmp(form2, pp.name, pp.name.length) === 0) {
-          found2 = pp.order;
-          break;
-        }
-      }
+      var found2 = specialForms.find(function (pp) {
+        return self.strncmp(form2, pp.name, pp.name.length) === 0;
+      });
+      found2 = typeof found2 == 'undefined' ? -1 : found2.order;
 
       const x = found1 - found2;
       const nested = (x < 0) ? -1 : 0;
@@ -106,10 +101,10 @@
     }
   }
 
-  let versionCompareInternal = function (origVer1, origVer2) {
-    let ver1 = '';
-    let ver2 = '';
-    let compare = 0;
+  var versionCompareInternal = function (origVer1, origVer2) {
+    var ver1 = '';
+    var ver2 = '';
+    var compare = 0;
 
     if (!origVer1 || !origVer2) {
       if (!origVer1 && !origVer2) {
@@ -132,12 +127,12 @@
     } else {
       ver2 = utils.phpCanonicalizeVersion(origVer2);
     }
-    let v1 = ver1.split('.');
-    let v2 = ver2.split('.');
-    let i = 0
+    var v1 = ver1.split('.');
+    var v2 = ver2.split('.');
+    var i = 0
     while (i < v1.length && i < v2.length && compare === 0) {
-      let p1 = v1[i];
-      let p2 = v2[i];
+      var p1 = v1[i];
+      var p2 = v2[i];
       if (utils.isdigit(p1[0]) && utils.isdigit(p2[0])) {
         // compare element numerically
         const l1 = parseInt(p1);
@@ -160,14 +155,14 @@
     }
     if (compare === 0) {
       if (i < v1.length) {
-        let p1 = v1[i];
+        var p1 = v1[i];
         if (utils.isdigit(p1[0])) {
           compare = 1;
         } else {
           compare = versionCompare(p1, '#N#');
         }
       } else if (i < v2.length) {
-        let p2 = v2[i];
+        var p2 = v2[i];
         if (utils.isdigit(p2[0])) {
           compare = -1;
         } else {
@@ -178,7 +173,7 @@
     return compare;
   }
 
-  let versionCompare = function (origVer1, origVer2, operator) {
+  var versionCompare = function (origVer1, origVer2, operator) {
     const compare = versionCompareInternal(origVer1, origVer2)
     if (!operator) {
       return compare;
